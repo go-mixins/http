@@ -36,7 +36,7 @@ func (srv *Server) Serve(h http.Handler) (err error) {
 
 	select {
 	case sig := <-interrupt:
-		err = errors.New("received " + sig.String())
+		err = errors.New(sig.String())
 	case err = <-serverErrors:
 		break
 	}
