@@ -19,8 +19,8 @@ import (
 // Server is a scaffolding for basic HTTP server. The structure members are
 // configured externally, through JSON deserialization or environment variables
 type Server struct {
-	StopTimeout time.Duration `default:"5000"`
-	Address     string        `default:":8000"`
+	StopTimeout int    `default:"5000"`
+	Address     string `default:":8000"`
 }
 
 // Serve starts the server on the configured address
@@ -41,7 +41,7 @@ func (srv *Server) Serve(h http.Handler) (err error) {
 
 	select {
 	case sig := <-interrupt:
-		ctx, cancel := context.WithTimeout(context.Background(), srv.StopTimeout*time.Millisecond)
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(srv.StopTimeout)*time.Millisecond)
 		defer cancel()
 		if err = hs.Shutdown(ctx); err != nil {
 			return
