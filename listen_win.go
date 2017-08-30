@@ -3,13 +3,12 @@
 package http
 
 import (
-	"errors"
 	"net"
 	"strings"
 )
 
-func (srv *App) listen() (l net.Listener, err error) {
-	switch addr := srv.address; {
+func (srv *Server) listen() (l net.Listener, err error) {
+	switch addr := srv.Address; {
 	case strings.HasPrefix(addr, "http://"):
 		addr = strings.TrimPrefix(addr, "http://")
 		fallthrough
